@@ -1,14 +1,15 @@
 import { defineConfig } from 'vite';
+ // Si estás usando React, ajusta según corresponda
 
 export default defineConfig({
-  root: 'src',
-  build: {
-    outDir: '../dist',
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: 'src/views/index.html',
-      }
-    }
-  }
+  plugins: [], // O [vue()] si estás usando Vue
+  server: {
+    proxy: {
+      '/upload': {
+        target: 'http://localhost:3000', // La URL de tu servidor Node.js
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/upload/, ''),
+      },
+    },
+  },
 });

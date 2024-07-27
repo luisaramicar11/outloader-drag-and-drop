@@ -1,5 +1,6 @@
 import { IDataRow,  DataTable, ColumnName} from "../models/file.model"
 
+/* class that process information from file */
 export class FileController {
     public fileContent: string;
     constructor(fileContent: string) {

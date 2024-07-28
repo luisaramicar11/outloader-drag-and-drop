@@ -5,6 +5,7 @@ import {convertToCsvController} from "./controllers/convertToCsv.controller"
 import {downloadCsvController} from "./controllers/downloadCsv.controller"
 import { DataTable, ColumnName} from "./models/file.model"
 
+/* variables */
 const csvForm = document.getElementById("csvForm") as HTMLFormElement;
 const csvFile = document.getElementById("csvFile") as HTMLInputElement;
 const displayArea = document.getElementById("displayArea") as HTMLDivElement;
@@ -17,6 +18,7 @@ let page: number = 1;
 let data: DataTable = [];
 let columnNames: ColumnName = [];
 
+/*function that allows pagination to be performed*/
 function pagination(totalRecords: number, page: number, limit: number): string {
     const totalPages: number = Math.ceil(totalRecords / limit);
     const maxButtons: number = 10;
@@ -53,6 +55,7 @@ function pagination(totalRecords: number, page: number, limit: number): string {
     return paginationHtml;
 };
 
+/*function that renders the table depending on the pagination, or the filter */
 async function renderTableControlls(){
     const searchTerm: string = searchInput.value;
     console.log("soyla data",data)
@@ -76,6 +79,7 @@ async function renderTableControlls(){
     
 };
 
+/*event that loads the file and allows the download of the filtered information */
 document.addEventListener('DOMContentLoaded', () => {
     csvForm.addEventListener("submit", (event:Event) => {
         event.preventDefault();

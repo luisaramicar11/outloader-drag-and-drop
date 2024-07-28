@@ -50,7 +50,7 @@ CSV Uploader is a web application that allows users to upload, display, filter, 
       - `bootstrap.min.css`: Bootstrap CSS file.
       - `styles.css`: Own styles.
   - `index.ts`: Main TypeScript file for the application logic.
-  - `index.html`: Main HTML file for the application.
+- `index.html`: Main HTML file for the application.
 
 ## How It Works
 

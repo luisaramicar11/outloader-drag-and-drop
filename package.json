@@ -11,11 +11,14 @@
   "devDependencies": {
     "@types/node": "^20.14.12",
     "@vitejs/plugin-react": "^4.3.1",
+    "sass": "^1.77.8",
     "typescript": "^5.5.4",
     "vite": "^5.3.4",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1"

@@ -1,3 +1,4 @@
+/*Adding function to download plain text file*/
 export async function downloadCsvController(csvContent: string, fileName: string){
     const blob = new Blob([csvContent], {type: 'text/csv; charset=utf-8'});
     const url = URL.createObjectURL(blob);

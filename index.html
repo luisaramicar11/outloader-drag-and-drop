@@ -38,10 +38,11 @@
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
-        </button>
+          </button>
         </div>
       </nav>
     </header>
+
     <main>
       <section class="container">
         <div class="row">
@@ -52,8 +53,12 @@
         <!-- Form area -->
         <div class="row">
           <div class="w-100 col-4">
-            <form class="d-flex justify-content-center flex-column align-items-center gap-4" action="" id="csvForm">
-              <div class="mb3 ">
+            <form
+              class="d-flex justify-content-center flex-column align-items-center gap-4"
+              action=""
+              id="csvForm"
+            >
+              <div class="mb3">
                 <input
                   type="file"
                   class="form-control"
@@ -62,7 +67,11 @@
                 />
               </div>
               <div class="mb-3 d-flex gap-4">
-                <input type="submit" class="btn btn-warning fw-bold text-white" value="Submit" />
+                <input
+                  type="submit"
+                  class="btn btn-warning fw-bold text-white"
+                  value="Submit"
+                />
                 <button
                   id="downloadCSV"
                   class="btn btn-secondary fw-bold"
@@ -76,14 +85,19 @@
         </div>
         <div class="row mt-5 mb-5">
           <div class="col w-100">
-              <div class="mb-3 d-flex justify-content-center">
-                  <input type="text" class="form-control w-50" id="searchInput" placeholder="Search...">  
-              </div>
+            <div class="mb-3 d-flex justify-content-center">
+              <input
+                type="text"
+                class="form-control w-50"
+                id="searchInput"
+                placeholder="Search..."
+              />
+            </div>
           </div>
-      </div>
+        </div>
         <div class="row">
           <div class="col">
-            <!-- file area -->
+            <!-- Pagination area -->
             <div id="displayArea"></div>
             <nav
               id="paginationControlls"

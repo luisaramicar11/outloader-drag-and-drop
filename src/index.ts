@@ -12,10 +12,10 @@ const displayArea = document.getElementById("displayArea") as HTMLDivElement;
 const searchInput = document.getElementById("searchInput") as HTMLInputElement;
 const downloadCSVButton = document.getElementById("downloadCSV") as HTMLInputElement; 
 const paginationHtml = document.getElementById("paginationControlls") as HTMLElement;
-let sortColumn: string = '';
-let sortOrder: 'asc' | 'desc' = 'asc';
 
 const limit: number = 15;
+let sortColumn: string = '';
+let sortOrder: 'asc' | 'desc' = 'asc';
 let page: number = 1;
 let data: DataTable = [];
 let columnNames: ColumnName = [];
@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const fileName: string = file.name;
         const fileExtension: string | undefined = fileName.split('.').pop()?.toLowerCase();
 
-        if (fileExtension !== 'csv' && fileExtension !== 'txt') {
-            alert("Please upload a valid CSV or TXT file.");
+        if (fileExtension !== 'csv') {
+            alert("Please upload a valid CSV file.");
             return;
         }
 

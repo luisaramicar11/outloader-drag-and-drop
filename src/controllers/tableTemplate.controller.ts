@@ -4,7 +4,9 @@ import { DataTable } from "../models/file.model";
 export async function tableTemplateController(
   data: DataTable,
   page: number,
-  limit: number
+  limit: number,
+  sortColumn: string,
+  sortOrder: 'asc' | 'desc'
 ): Promise<string> {
   /*start and end indexes of the array information (data) being rendered*/
   const startIndex = (page - 1) * limit;
@@ -16,11 +18,16 @@ export async function tableTemplateController(
 
   /*table rows with data information*/
   return `
-    <table class="table table-striped">
+    <table class="table  table-striped-columns table-bordered">
        <thead>
             <tr>
                 ${headerRow
-                  .map((row) => `<th scope="col">${row}</th>`)
+                  .map((row) => `
+                    <th scope="col">${row}
+                      <button class="sort-button" data-column="${row}" data-order="${sortOrder === 'asc' ? 'desc' : 'asc'}">
+                         ${sortColumn === row ? (sortOrder === 'asc' ? '↑' : '↓') : '↑'}
+                      </button>
+                    </th>`)
                   .join("")}
             </tr>
         </thead>
@@ -33,3 +40,4 @@ export async function tableTemplateController(
     </table>
     `;
 }
+

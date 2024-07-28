@@ -14,6 +14,8 @@ const downloadCSVButton = document.getElementById("downloadCSV") as HTMLInputEle
 const paginationHtml = document.getElementById("paginationControlls") as HTMLElement;
 
 const limit: number = 15;
+let sortColumn: string = '';
+let sortOrder: 'asc' | 'desc' = 'asc';
 let page: number = 1;
 let data: DataTable = [];
 let columnNames: ColumnName = [];
@@ -56,43 +58,55 @@ function pagination(totalRecords: number, page: number, limit: number): string {
 };
 
 /*function that renders the table depending on the pagination, or the filter */
-async function renderTableControlls(){
+async function renderTableControlls() {
     const searchTerm: string = searchInput.value;
-    console.log("soyla data",data)
-    console.log("search term", searchTerm)
-    const filteredData: DataTable = filterDataController(data, searchTerm);
-    console.log("filteredData",filteredData)
+    let filteredData: DataTable = filterDataController(data, searchTerm);
+
+    if (sortColumn) {
+        const fileController = new FileController('');
+        fileController.data = filteredData;
+        fileController.sortData(sortColumn, sortOrder);
+        filteredData = fileController.getData();
+    }
 
     displayArea.innerHTML = '';
-    const tableHtml: string = await tableTemplateController(filteredData, page, limit);
+    const tableHtml: string = await tableTemplateController(filteredData, page, limit, sortColumn, sortOrder);
     displayArea.innerHTML += tableHtml;
 
     const paginationControlls: string = pagination(filteredData.length, page, limit);
     paginationHtml!.innerHTML = paginationControlls;
 
     document.querySelectorAll('.page-link').forEach(button => {
-        button.addEventListener('click', () =>{
+        button.addEventListener('click', () => {
             page = parseInt(button.getAttribute('data-page')!);
             renderTableControlls();
         })
-    })
-    
+    });
+
+    document.querySelectorAll('.sort-button').forEach(button => {
+        button.addEventListener('click', (event: Event) => {
+            const target = event.target as HTMLButtonElement;
+            sortColumn = target.getAttribute('data-column')!;
+            sortOrder = target.getAttribute('data-order') as 'asc' | 'desc';
+            renderTableControlls();
+        });
+    });
 };
 
 /*event that loads the file and allows the download of the filtered information */
 document.addEventListener('DOMContentLoaded', () => {
-    csvForm.addEventListener("submit", (event:Event) => {
+    csvForm.addEventListener("submit", (event: Event) => {
         event.preventDefault();
         const file: File = csvFile.files![0];
         const fileReader: FileReader = new FileReader();
         const fileName: string = file.name;
         const fileExtension: string | undefined = fileName.split('.').pop()?.toLowerCase();
-    
-        if(fileExtension !== 'csv' && fileExtension !== 'txt'){
-            alert("Please upload a valid CSV or TXT file.");
+
+        if (fileExtension !== 'csv') {
+            alert("Please upload a valid CSV file.");
             return;
         }
-    
+
         fileReader.onload = async (event: ProgressEvent) => {
             const csvContent: string = (event.target as FileReader).result as string;
             const fileController: FileController = new FileController(csvContent);
@@ -103,20 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         fileReader.readAsText(file);
     });
-    
+
     downloadCSVButton.addEventListener('click', async (e:Event) =>{
         e.preventDefault();
         const filteredData = filterDataController(data, searchInput.value);
         const csvContent: string = await convertToCsvController(filteredData, columnNames);
         await downloadCsvController(csvContent, 'data.csv');
     });
-    
-    searchInput.addEventListener('input', async (e:Event) =>{
-        console.log("soy input")
+
+    searchInput.addEventListener("input", async (event: Event) => {
+        event.preventDefault();
         await renderTableControlls();
     });
-})
-
-
-
-
+});
